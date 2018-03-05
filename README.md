@@ -1,6 +1,7 @@
 # space-x
 
 > A Vue.js project
+[Live Link](http://immense-brothers.surge.sh/#/)
 
 ## Build Setup
 
