@@ -7,8 +7,8 @@
         <label>Show rockets that failed launch.</label>
       </div>
     </div>
-    <transition-group name="fade" tag="div" class="cards-wrapper">>
-      <div v-for="rocket in filterRockets" v-bind:key="rocket" class="card">
+    <transition-group name="card" tag="div" class="cards-wrapper">>
+      <div v-for="rocket in filterRockets" v-bind:key="rocket.flight_number" class="card">
         <div class="card__inner">
           <div class="card__image">
             <img :src="rocket.links.mission_patch" />
@@ -101,11 +101,25 @@
         max-width: 100%;
       }
     }
+    &-move {
+      transition: all 600ms ease-in-out 50ms;
+    }
+    &-enter-active {
+      transition: all 300ms ease-out;
+    }
+
+    &-leave-active {
+      transition: all 200ms ease-out;
+      opacity: 0;
+      z-index: -10;
+    }
+
+    &-enter,
+    &-leave-to {
+      opacity: 0;
+    }
+    &-enter {
+      transform: scale(0.4);
+    }
   }
-  .fade-enter-active, .fade-leave-active {
-  transition: opacity .5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-}
 </style>
