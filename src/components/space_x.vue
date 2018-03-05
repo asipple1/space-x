@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="filters">
+      <h3>Filters</h3>
       <div class="field-group">
         <input type="checkbox" v-model="show_failed_rockets">
         <label>Show rockets that failed launch.</label>
@@ -18,10 +19,15 @@
             <li v-if="rocket.launch_success">
               Rocket Launch Successful.
             </li>
-            <li v-else>
+            <li v-else-if="!rocket.details">
+              Launch Pending
+            </li>
+            <li v-else >
               Rocket Launch Failed.
             </li>
           </ul>
+          <p>{{ rocket.details }}</p>
+          <a v-if="rocket.links.video_link"v-bind:href="rocket.links.video_link">Video Link</a>
         </div>
       </div>
     </transition-group>
