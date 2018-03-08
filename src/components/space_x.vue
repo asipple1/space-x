@@ -27,7 +27,7 @@
             </li>
           </ul>
           <p>{{ rocket.details }}</p>
-          <a v-if="rocket.links.video_link"v-bind:href="rocket.links.video_link">Video Link</a>
+          <a v-if="rocket.links.video_link" v-bind:href="rocket.links.video_link">Video Link</a>
         </div>
       </div>
     </transition-group>
