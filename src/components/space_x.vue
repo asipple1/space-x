@@ -8,26 +8,31 @@
       </div>
     </div>
     <transition-group name="card" tag="div" class="cards-wrapper">>
-      <div v-for="rocket in filterRockets" v-bind:key="rocket.flight_number" class="card">
-        <div class="card__inner">
+      <div v-for="rocket in filterRockets.slice().reverse()" v-bind:key="rocket.flight_number" class="card">
+        <div class="card__left">
           <div class="card__image">
             <img :src="rocket.links.mission_patch" />
           </div>
+        </div>
+        <div class="card__right">
           <ul>
-            <li>Flight Number: {{ rocket.flight_number }}</li>
-            <li>Launch Date: {{ launch_date(rocket.launch_date_utc) }}</li>
-            <li v-if="rocket.launch_success">
-              Rocket Launch Successful.
-            </li>
-            <li v-else-if="!rocket.details">
-              Launch Pending
-            </li>
-            <li v-else >
-              Rocket Launch Failed.
-            </li>
+          <li>Flight Number: {{ rocket.flight_number }}</li>
+          <li>Launch Date: {{ launch_date(rocket.launch_date_utc) }}</li>
+          <li v-if="rocket.launch_success">
+          Rocket Launch Successful.
+          </li>
+          <li v-else-if="!rocket.details">
+          Launch Pending
+          </li>
+          <li v-else >
+          Rocket Launch Failed.
+          </li>
           </ul>
           <p>{{ rocket.details }}</p>
           <a v-if="rocket.links.video_link" v-bind:href="rocket.links.video_link">Video Link</a>
+          <router-link :to="{ name: 'rocket', params: { id: rocket.flight_number }}">
+          Learn More
+          </router-link>
         </div>
       </div>
     </transition-group>
@@ -46,7 +51,7 @@
       }
     },
     created () {
-      axios.get('https://api.spacexdata.com/v2/launches/all').then(response => {
+      axios.get('https://api.spacexdata.com/v2/launches').then(response => {
           this.rockets = response.data;
       });
     },
@@ -75,8 +80,9 @@
 
 <style lang='scss' scoped>
   .container {
-    display: grid;
-    grid-columns: auto minmax(min-content, 1fr);
+    // display: grid;
+    // grid-columns: auto minmax(min-content, 1fr);
+    padding: 20px;
   }
   .filters {
     grid-column: 1;
@@ -84,7 +90,7 @@
   }
   .cards-wrapper {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 40px;
     grid-column: 2;
   }
@@ -93,12 +99,10 @@
     min-height: 320px;
     box-shadow: rgba(0, 0, 0, 0.19) 0 0 8px 0;
     &__image {
-      width: 100%;
-      text-align: center;
+      max-width: 250px;
       img {
+        width: 100%;
         object-fit: contain;
-        max-height: 250px;
-        max-width: 100%;
       }
     }
     &-move {
