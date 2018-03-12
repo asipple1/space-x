@@ -20,7 +20,7 @@
         <div class="card">
           <div class="card-image">
             <figure class="image is-128x128">
-              <img :src="rocket.links.mission_patch" />
+              <img v-lazy="rocket.links.mission_patch" />
             </figure>
           </div>
           <div class="card-content">
